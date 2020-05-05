@@ -2,44 +2,47 @@ package leonardobufalo.example.pontointeligente.services
 
 import leonardobufalo.example.pontointeligente.documents.Empresa
 import leonardobufalo.example.pontointeligente.repositories.EmpresaRepository
+import leonardobufalo.example.pontointeligente.services.impl.EmpresaServiceImpl
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.BDDMockito
+import org.mockito.BDDMockito.given
+import org.mockito.InjectMocks
+import org.mockito.Mock
+import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.test.context.junit4.SpringRunner
 
-@RunWith(SpringRunner::class)
 @SpringBootTest
 class EmpresaServiceTest {
 
-    @Autowired
-    val empresaService: EmpresaService? = null
+    @InjectMocks
+    private lateinit var empresaServiceImpl: EmpresaServiceImpl
 
-    @MockBean
-    private val empresaRepository: EmpresaRepository? = null
+    @Mock
+    private lateinit var empresaRepository: EmpresaRepository
 
     private val CNPJ = "00066370000121"
 
     @Before
-    @Throws(Exception::class)
     fun setUp(){
-            BDDMockito.given(empresaRepository?.findByCnpj(CNPJ)).willReturn(empresa())
-            BDDMockito.given(empresaRepository?.save(empresa())).willReturn(empresa())
+        MockitoAnnotations.initMocks(this)
+
+        given(empresaRepository.findByCnpj(CNPJ)).willReturn(empresa())
+        given(empresaRepository.save(empresa())).willReturn(empresa())
     }
 
     @Test
     fun testBucarEmpresaPorCnpj() {
-        val empresa: Empresa? = empresaService?.buscarPorCnpj(CNPJ)
-        Assert.assertNotNull(empresa)
+        val empresa: Empresa? = empresaServiceImpl?.buscarPorCnpj(CNPJ)
+        Assert.assertEquals(empresa() ,empresa)
     }
 
     @Test
     fun testPersistirEmpresa() {
-        val empresa: Empresa? = empresaService?.persisitirEmpresa(empresa())
+        val empresa: Empresa? = empresaServiceImpl?.persisitirEmpresa(empresa())
         Assert.assertEquals(empresa(), empresa)
     }
 
