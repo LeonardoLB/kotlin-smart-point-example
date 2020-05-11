@@ -1,8 +1,6 @@
 package leonardobufalo.example.pontointeligente.utils
 
 import junit.framework.Assert
-import leonardobufalo.example.pontointeligente.SenhaUtils
-import org.junit.Ignore
 import org.junit.jupiter.api.Test
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 

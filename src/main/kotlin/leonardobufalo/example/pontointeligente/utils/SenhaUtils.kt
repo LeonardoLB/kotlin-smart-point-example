@@ -1,4 +1,4 @@
-package leonardobufalo.example.pontointeligente
+package leonardobufalo.example.pontointeligente.utils
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
